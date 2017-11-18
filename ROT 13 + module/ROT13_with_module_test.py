@@ -3,7 +3,7 @@
 # ---------------------------
 
 a = {'A': 'N', 'B': 'O', 'C': 'P', 'D': 'Q', 'E': 'R', 'F': 'S'}
-a1 = {'G': 'T', 'H': 'U', 'I': 'V', 'J': 'W', 'K': 'X', 'L': 'Y', 'M': 'Z'}
+a1 = {'G': 'T', 'H': 'U', 'I': 'V', 'J': 'W', 'K': 'X', 'L': 'Y', 'M': 'Z'}  #'H': 'U'
 
 b = {'N': 'A', 'O': 'B', 'P': 'C', 'Q': 'D', 'R': 'E', 'S': 'F'}
 b1 = {'T': 'G', 'U': 'H', 'V': 'I', 'W': 'J', 'X': 'K', 'Y': 'L', 'Z': 'M'}
@@ -25,61 +25,50 @@ w.update(v)  # lowercase dictionary
 a.update(w)  # full dictionary
 
 def ROT13():
-    try:
-      print('What do You want to do? \n (1) - to decrypt (ROT13 -> EN) \n (2) - to encrypt (EN -> ROT13)  ')
-      x = float(input('> Enter operation number: '))
-    except ValueError:
-      print(' !Enter the number!')
-    try:
-      z = float(input(' (3) - from console or (4) - from document?: '))
-    except ValueError:
-      print(' !Enter the number!!')
-    else:
-      if z == 3:
-        s = input('>> Enter the string: ')
-        str = ''
-        if x == 1:
-          for item in s:
+    def from_concole(s, _str=''):
+        for item in s:
             if item in a.keys():
-                str += a.get(item)
-        print(">>> Decoding: ", str)
-        if x == 2:
-          inv_a = {v: k for k, v in a.items()}
-          for item in s:
-            if item in inv_a.keys():
-                str += inv_a.get(item)
-        print('>>> Encoding: ', str)
+                _str += a.get(item)
+        return _str
 
-      elif z == 4:
-       try:
-        file = open("string.txt")
-       except OSError:
-        print('OSError!')
-       try:
+    def from_file(file, result, _str=''):
         cont = file.read()
-        result = open("Result.txt","w")
-       except OSError:
-          print('OSError!')
-       else:
-        str = ''
-        if x == 1:
-          for item in cont:
+        for item in cont:
             if item in a.keys():
-                str += a.get(item)
-          result.write(str)
-          print(">>> Decoding was finished! ")
-          print('>>>Result ',str)
-        if x == 2:
-          inv_a = {v: k for k, v in a.items()}
-          for item in cont:
-            if item in inv_a.keys():
-                str += inv_a.get(item)
+                _str += a.get(item)
+        result.write(_str)
+        return 'Finished'
 
-          result.write(str)
-          print('>>> Encoding was finished! ')
-          print('>>> Result ', str)
-       finally:
-        file.close()
-        result.close()
+    if __name__ == "main":
+        import test_ROT13 as ROT13
+        ROT13.test_console(from_concole)
+        ROT13.test_file(from_file, from_concole)
+
+    print('What do you want? \n'
+          '(1) - to decrypt (ROT13 -> EN) \n'
+          '(2) - to encrypt (EN -> ROT13)')
+
+    x = float(input('> Enter operation number: '))
+
+    z = float(input(' (3) - from console or (4) - from document?: '))
+
+    if z == 3:
+        s = input('>> Enter the string: ')
+        if x == 1:
+            print(">>> Decoding: ", from_concole(s))
+        elif x == 2:
+            print('>>> Encoding: ', from_concole(s))
+
+    elif z == 4:
+        _file = open("string(ROT13)_test.txt")
+        _result = open("Result.txt", "w")
+        if x == 1:
+            print(">>> Decoding: ", from_file(_file, _result))
+            _file.close()
+        elif x == 2:
+            _file = open("string(EN)_test.txt")
+            print('>>> Encoding: ', from_file(_file, _result))
+            _file.close()
+            _result.close()
 
 ROT13()
