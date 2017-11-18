@@ -25,13 +25,13 @@ w.update(v)  # lowercase dictionary
 a.update(w)  # full dictionary
 
 def ROT13():
-    def from_concole(s, _str=''):
+    def from_concole(s, _str = ''):
         for item in s:
             if item in a.keys():
                 _str += a.get(item)
         return _str
 
-    def from_file(file, result, _str=''):
+    def from_file(file, result, _str = ''):
         cont = file.read()
         for item in cont:
             if item in a.keys():
