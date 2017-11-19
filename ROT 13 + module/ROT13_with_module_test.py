@@ -25,6 +25,11 @@ w.update(v)  # lowercase dictionary
 a.update(w)  # full dictionary
 
 def ROT13():
+    ```
+    Функция содержит в себе 2 функции для кодирования/декодирования строки
+    из консоли и из файла. Тестирование выполняется с помощью модуля
+    test_ROT13.
+    ```
     def from_concole(s, _str = ''):
         for item in s:
             if item in a.keys():
