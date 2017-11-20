@@ -44,7 +44,7 @@ def ROT13():
         result.write(_str)
         return 'Finished'
 
-    if __name__ == "main":
+    if __name__ == "__main__":
         import test_ROT13 as ROT13
         ROT13.test_console(from_concole)
         ROT13.test_file(from_file, from_concole)
